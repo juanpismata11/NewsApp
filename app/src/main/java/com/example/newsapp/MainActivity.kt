@@ -90,6 +90,32 @@ fun HomePage(){
             )
         }
 
+        Row(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp),
+            horizontalArrangement = Arrangement.Absolute.SpaceEvenly
+        ){
+            Text(
+                text="Noticias",
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp
+            )
+
+            Text(
+                text="Eventos",
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+                color = Color.Gray
+            )
+
+            Text(
+                text="Clima",
+                fontWeight = FontWeight.Bold,
+                fontSize = 24.sp,
+                color = Color.Gray
+            )
+        }
 
     }
 
