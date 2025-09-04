@@ -19,6 +19,7 @@ import androidx.compose.foundation.layout.wrapContentWidth
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.items
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
@@ -34,10 +35,12 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.text.font.Font
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
@@ -202,15 +205,42 @@ fun HomePage(){
             modifier = Modifier.padding(10.dp)
         )
 
-//        LazyVerticalGrid(
-//            columns = GridCells.Fixed(2)
-//        ) {
-//            val newsList = 0
-//            items(newsList){ news ->
-//                NewsCard(news = news)
-//
-//            }
-//        }
+        LazyVerticalGrid(
+            columns = GridCells.Fixed(2)
+        ) {
+            items(noticias){ news ->
+
+                Column(
+                    modifier = Modifier
+                ){
+                    Card(
+                        modifier = Modifier
+                            .padding(15.dp)
+                            .height(200.dp)
+
+                    ){
+                        Column(
+                            modifier = Modifier
+                                .fillMaxSize()
+                                .background(Color.LightGray)
+                                .padding(10.dp),
+                            verticalArrangement = Arrangement.Bottom,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text(
+                                text = news.descripcion,
+                                fontWeight = FontWeight.Bold,
+                                color = Color.Black,
+                                modifier = Modifier
+                            )
+                        }
+                    }
+                }
+
+
+
+            }
+        }
 
     }
 }
