@@ -1,6 +1,5 @@
 package com.example.newsapp
 
-import android.R.attr.fontWeight
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -11,26 +10,41 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentHeight
+import androidx.compose.foundation.layout.wrapContentSize
+import androidx.compose.foundation.layout.wrapContentWidth
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
+import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
 import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.max
 import androidx.compose.ui.unit.sp
 import com.example.newsapp.ui.theme.NewsAppTheme
-import org.intellij.lang.annotations.JdkConstants
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -57,8 +71,21 @@ fun Greeting(name: String, modifier: Modifier = Modifier) {
     )
 }
 
+data class Noticias(
+    val descripcion: String,
+    val fecha: String
+)
+
 @Composable
 fun HomePage(){
+    var textSearchBar by remember { mutableStateOf("") }
+
+    val noticias = listOf(
+        Noticias("El presidente de EE. UU. no muestra signos de arrepentimiento... ","febrero 08 - 2025"),
+        Noticias("Banarse en la piscina del rio de Cleopatra", "febrero 10 - 2024"),
+        Noticias("Gigantes tecnologias de inteligencia artificial hacen algo...", "julio 26 - 2025"),
+        Noticias("El rover de marte le hace ping a mi computadora ayuda", "diciembre 20 - 2023")
+    )
 
     Column(){
         Row(
@@ -68,9 +95,9 @@ fun HomePage(){
                 .padding(10.dp)
         ){
             OutlinedTextField(
-                value = "",
-                onValueChange = {
-
+                value = textSearchBar,
+                onValueChange = { newText ->
+                    textSearchBar = newText
                 },
                 placeholder = {
                     Text(
@@ -117,11 +144,75 @@ fun HomePage(){
             )
         }
 
+        Text(
+            text = "Ultimas noticias",
+            fontWeight = FontWeight.Bold,
+            fontSize = 24.sp,
+            modifier = Modifier.padding(10.dp)
+        )
+
+        LazyRow(
+            modifier = Modifier
+                .fillMaxWidth()
+                .padding(10.dp)
+        ){
+            items(noticias){ noticia ->
+                Card(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .width(280.dp)
+                        .height(220.dp)
+                        .padding(10.dp),
+
+                ){
+                    Text(
+                        text = noticia.descripcion,
+                        modifier = Modifier.fillMaxWidth()
+                            .background(Color.Blue)
+                            .padding(top = 30.dp)
+                            .padding(10.dp),
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        color = Color.White,
+                        maxLines = Int.MAX_VALUE,
+                        softWrap = true,
+                        overflow = TextOverflow.Ellipsis,
+
+                    )
+
+                    Text(
+                        text = noticia.fecha,
+                        fontSize = 12.sp,
+                        fontWeight = FontWeight.Bold,
+                        modifier = Modifier.fillMaxSize()
+                            .background(Color.Blue)
+                            .padding(10.dp),
+                        color = Color.White,
+
+                    )
+                }
+            }
+
+        }
+
+        Text(
+            text = "Alrededor del mundo",
+            fontWeight = FontWeight.Bold,
+            fontSize = 24.sp,
+            modifier = Modifier.padding(10.dp)
+        )
+
+//        LazyVerticalGrid(
+//            columns = GridCells.Fixed(2)
+//        ) {
+//            val newsList = 0
+//            items(newsList){ news ->
+//                NewsCard(news = news)
+//
+//            }
+//        }
+
     }
-
-
-
-
 }
 
 @Preview(showBackground = true)
