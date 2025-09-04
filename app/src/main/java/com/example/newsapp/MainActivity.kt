@@ -56,8 +56,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             NewsAppTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
+                    HomePage(
                         modifier = Modifier.padding(innerPadding)
                     )
                 }
@@ -80,7 +79,7 @@ data class Noticias(
 )
 
 @Composable
-fun HomePage(){
+fun HomePage(modifier: Modifier = Modifier){
     var textSearchBar by remember { mutableStateOf("") }
 
     val noticias = listOf(
